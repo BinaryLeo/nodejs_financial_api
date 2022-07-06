@@ -6,12 +6,17 @@ app.use(express.json())
 const customers = [];
 app.post("/account",(request,response)=>{   
   const {cpf,name}=  request.body;  // get the cpf and name from the request
-  const id = uuidv4();
+  const customerAlredyExists = customers.some((customer)=>
+    customer.cpf === cpf);
+  if (customerAlredyExists) {
+    response.status(StatusCodes.StatusCodes.NOT_FOUND).json({
+        error: 'Customer already exists!'})
+  }
   customers.push( 
     {
      cpf,
      name,
-     id,
+     id:uuidv4(),
      statement:[] ,
     });
     return response.send(StatusCodes.StatusCodes.OK);

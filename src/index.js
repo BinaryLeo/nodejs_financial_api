@@ -19,6 +19,16 @@ app.post("/account",(request,response)=>{
      id:uuidv4(),
      statement:[] ,
     });
-    return response.send(StatusCodes.StatusCodes.OK);
+    return response.sendStatus(StatusCodes.StatusCodes.OK);
 }) 
-app.listen(3333) 
+app.get("/statement/:cpf",(request,response)=>{
+  const {cpf} = request.params; 
+  const customer = customers.find((customer)=> customer.cpf === cpf);
+  if(!customer) {
+    return response.status(StatusCodes.StatusCodes.NOT_FOUND).json({error: 'Customer not found!'});
+  }
+  return response.json(customer.statement)
+
+}
+);
+app.listen(3333)  

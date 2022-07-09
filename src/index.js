@@ -6,7 +6,7 @@ app.use(express.json())
 const customers = [];
 app.post("/account",(request,response)=>{   
   const {cpf,name}=  request.body;  // get the cpf and name from the request
-  const customerAlredyExists = customers.some((customer)=>
+  const customerAlredyExists = customers.some((customer)=> // exist/not exist
     customer.cpf === cpf);
   if (customerAlredyExists) {
     response.status(StatusCodes.StatusCodes.NOT_FOUND).json({
@@ -21,14 +21,14 @@ app.post("/account",(request,response)=>{
     });
     return response.sendStatus(StatusCodes.StatusCodes.OK);
 }) 
-app.get("/statement/:cpf",(request,response)=>{
-  const {cpf} = request.params; 
+app.get("/statement",(request,response)=>{
+  const {cpf} = request.headers; // get cpf from headers
   const customer = customers.find((customer)=> customer.cpf === cpf);
   if(!customer) {
     return response.status(StatusCodes.StatusCodes.NOT_FOUND).json({error: 'Customer not found!'});
   }
   return response.json(customer.statement)
 
-}
+} 
 );
-app.listen(3333)  
+app.listen(3333)

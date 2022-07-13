@@ -11,7 +11,8 @@ const options = {
   day: "numeric",
   hour: "numeric",
 };
-//Middleware
+
+//*Middleware - Verify Account by CPF 
 function verifyIfAccountExists(request, response, next) {
   const { cpf } = request.headers; // get cpf from headers
   const customer = customers.find((customer) => customer.cpf === cpf);
@@ -24,6 +25,8 @@ function verifyIfAccountExists(request, response, next) {
   // will to receive the customer object and  pass it to the next middlewares
   return next();
 }
+
+//*Post - Create a new customer Account
 app.post("/account", (request, response) => {
   const { cpf, name } = request.body; // get the cpf and name from the request
   const customerAlredyExists = customers.some(
@@ -44,6 +47,8 @@ app.post("/account", (request, response) => {
   });
   return response.sendStatus(StatusCodes.StatusCodes.OK);
 });
+
+//*Get - Search Statement - All data available
 //app.use(verifyIfAccountExists); // enables to everything below
 app.get("/statement", verifyIfAccountExists, (request, response) => {
   // verifyIfAccountExists inside the route enablesjust to  the route itself
@@ -51,6 +56,21 @@ app.get("/statement", verifyIfAccountExists, (request, response) => {
   const { customer } = request;
   return response.json(customer.statement);
 });
+
+//*Get - Statement by Date
+app.get("/statement/date", verifyIfAccountExists, (request, response) => {
+  const { customer } = request; 
+  const { date } = request.query; // e.g. date = july 12, 2022
+  const statement = customer.statement.filter(
+    (statement) =>
+      statement.createdAt.substring(0, statement.createdAt.lastIndexOf(",")) ===
+      date.toString()
+  );
+
+  return response.json(statement);
+});
+
+//*Post - New Deposit 
 app.post("/deposit", verifyIfAccountExists, (request, response) => {
   const { description, amount } = request.body;
   const { customer } = request; //customer from  request

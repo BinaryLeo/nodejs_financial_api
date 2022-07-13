@@ -83,4 +83,13 @@ app.post("/deposit", verifyIfAccountExists, (request, response) => {
   customer.statement.push(statementOperation);
   return response.status(StatusCodes.StatusCodes.OK).send();
 });
+
+//* Put - Change Customer Information
+app.put("/account", verifyIfAccountExists, (request, response) => {
+  const {name} = request.body;
+  const { customer } = request; //customer from request
+  customer.name = name; 
+  return response.status(StatusCodes.StatusCodes.OK).send();
+})
+
 app.listen(3333);

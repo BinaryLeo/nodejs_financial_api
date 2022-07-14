@@ -2,7 +2,7 @@
 A Node JS application to manage financial data
 
 
-### Requirements
+### Requirements:
 
 - [x] It must be possible to create an account.
 - [x] It must be possible to fetch the customer's bank statement.
@@ -14,7 +14,7 @@ A Node JS application to manage financial data
 - [x] It should be possible to delete an account.
 - [x] It must be possible to return the balance.
 
-### Business rules
+### Business rules:
 
 - [x] It should not be possible to register an account with an existing CPF.
 - [x] It should not be possible to fetch a statement from a non-existing account.

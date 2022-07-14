@@ -91,5 +91,9 @@ app.put("/account", verifyIfAccountExists, (request, response) => {
   customer.name = name; 
   return response.status(StatusCodes.StatusCodes.OK).send();
 })
-
+//* Get Account information
+app.get("/account", verifyIfAccountExists, (request, response) => {
+  const { customer } = request; //customer from request
+  return response.json(customer);
+})
 app.listen(3333);

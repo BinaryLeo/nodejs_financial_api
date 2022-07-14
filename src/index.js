@@ -1,3 +1,13 @@
+/*     ____________________________
+      /                           /\
+     /   BinaryLeo              _/ /\
+    /       NodeJS FINAPI       / \/
+   /                           /\
+  /___________________________/ /
+  \___________________________\/
+   \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+*/
+
 const StatusCodes = require("http-status-codes");
 const express = require("express");
 const { v4: uuidv4 } = require("uuid"); // V4 random

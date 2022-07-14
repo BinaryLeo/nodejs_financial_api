@@ -109,7 +109,7 @@ app.post('/withdraw', verifyIfAccountExists, (request, response) =>{
 
   const statementOperation = {
           amount, 
-          created_at : new Date(), 
+          createdAt:date.toLocaleString("en-CA", options), 
           type: "debit" 
   }
   customer.statement.push(statementOperation); 

@@ -4,6 +4,8 @@ const { v4: uuidv4 } = require("uuid"); // V4 random
 const app = express(); //a new instance of express
 app.use(express.json());
 const customers = [];
+
+//* settings to Canadian timestamp
 const date = new Date();
 const options = {
   year: "numeric",
@@ -129,6 +131,7 @@ app.put("/account", verifyIfAccountExists, (request, response) => {
   customer.name = name; 
   return response.status(StatusCodes.StatusCodes.OK).send();
 })
+
 //* Get Account information
 app.get("/account", verifyIfAccountExists, (request, response) => {
   const { customer } = request; //customer from request

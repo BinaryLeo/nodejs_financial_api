@@ -17,7 +17,7 @@ This project was built using the following technologies and features:
 - [Node.js](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
 - [Visual Studio Code](https://code.visualstudio.com/)
-- [Insominia](https://insomnia.rest/)
+- [Insomnia](https://insomnia.rest/)
 
 ## 🧪 requirements
 
@@ -36,7 +36,7 @@ This project was built using the following technologies and features:
 
 ## 🧪 business_rules
 
-- [x] It should not be possible to register an account with an existing customerID.
+- [x] It should not be possible to register an account with an existing SIN number (Social Insurance Number).
 - [x] It should not be possible to fetch a statement from a non-existing account.
 - [x] It should not be possible to deposit to a non-existing account.
 - [x] It should not be possible to withdraw from a non-existing account.
@@ -62,7 +62,7 @@ $ npm run dev
 
 ## 💡 endpoints
 
-- POST /account 
+- POST /account  </br>
 ```json
 {
 "sin": 1-123-456-7890, 
@@ -70,8 +70,7 @@ $ npm run dev
 }
 ```
 -----
-- POST /deposit
-
+- POST /deposit </br>
 Header sin: 1-123-456-7890
 ```json
 {
@@ -80,18 +79,37 @@ Header sin: 1-123-456-7890
 }
 ```
 -----
-- GET /statement
-
+- GET /statement </br>
 Header sin: 1-123-456-7890
+-----
+- GET /statement/date </br>
+Header sin: 1-123-456-7890 </br>
+Query  MonthDayYear: July 15, 2022 e.g
 
 -----
-- GET /statement/date
+- POST /withdraw </br>
+Header sin: 1-123-456-7890
+```json
+{
+	"amount": 500
+}
+```
+-----
+- GET /balance</br>
+Header sin: 1-123-456-7890
+-----
+- PUT /account</br>
+Header sin: 1-123-456-7890
+```json
+{
+	"name":"Luigi",
+}
+```
+-----
 
-- POST /withdraw
-- GET /balance
-- PUT /account
-- DELETE /account
-
+- DELETE /account</br>
+Header sin: 1-123-456-7890
+-----
 ## 📄 License
 
 This project was built under MIT. See the file [LICENSE](LICENSE) for more details.

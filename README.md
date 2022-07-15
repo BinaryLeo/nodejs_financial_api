@@ -56,8 +56,8 @@ $ yarn
 $ npm i
 
 # Start the app
-$ yarn start
-$ npm run start
+$ yarn dev
+$ npm run dev
 ```
 
 ## 💡 endpoints

@@ -10,8 +10,8 @@
 
 const StatusCodes = require("http-status-codes");
 const express = require("express");
-const { v4: uuidv4 } = require("uuid"); // V4 random
-const app = express(); //a new instance of express
+const { v4: uuidv4 } = require("uuid"); //* V4 random
+const app = express(); //* a new instance of express
 app.use(express.json());
 const customers = [];
 
@@ -24,17 +24,17 @@ const options = {
   hour: "numeric",
 };
 
-//*Middleware - Verify Account by ID 
+//*Middleware - Verify Account by SIN number (Social Insurance Number) .
 function verifyIfAccountExists(request, response, next) {
-  const { customerID } = request.headers; // get customerID from headers
-  const customer = customers.find((currentCustomer) => currentCustomer.customerID === customerID);
+  const { sin } = request.headers; //* get SIN number from headers
+  const customer = customers.find((currentCustomer) => currentCustomer.sin === sin);
   if (!customer) {
     return response
       .status(StatusCodes.StatusCodes.NOT_FOUND)
       .json({ error: "Customer not found!" });
   }
-  request.customer = customer; // All middlewares that require verifyIfAccountExists
-  // will to receive the customer object and  pass it to the next middlewares
+  request.customer = customer; //* All middlewares that require verifyIfAccountExists
+  //* will to receive the customer object and  pass it to the next middlewares
   return next();
 }
 
@@ -50,11 +50,11 @@ function GetBalance(statement){
 
 //*Post - Create a new customer Account
 app.post("/account", (request, response) => {
-  const { customerID, name } = request.body; // get the customerID and name from the request
+  const { sin, name } = request.body; //* get the SIN number and name from the request
   const customerAlredyExists = customers.some(
     (
-      customer // exist/not exist
-    ) => customer.customerID === customerID
+      customer //* exist/not exist
+    ) => customer.sin === sin
   );
   if (customerAlredyExists) {
     response.status(StatusCodes.StatusCodes.NOT_FOUND).json({
@@ -62,7 +62,7 @@ app.post("/account", (request, response) => {
     });
   }
   customers.push({
-    customerID,
+    sin,
     name,
     id: uuidv4(),
     statement: [],
@@ -71,9 +71,9 @@ app.post("/account", (request, response) => {
 });
 
 //*Get - Search Statement - All data available
-//app.use(verifyIfAccountExists); // enables to everything below
+//!app.use(verifyIfAccountExists); // enables to everything below
 app.get("/statement", verifyIfAccountExists, (request, response) => {
-  // verifyIfAccountExists inside the route enablesjust to  the route itself
+  //* verifyIfAccountExists inside the route enablesjust to  the route itself
 
   const { customer } = request;
   return response.json(customer.statement);
@@ -82,7 +82,7 @@ app.get("/statement", verifyIfAccountExists, (request, response) => {
 //*Get - Statement by Date
 app.get("/statement/date", verifyIfAccountExists, (request, response) => {
   const { customer } = request; 
-  const { MonthDayYear } = request.query; // e.g. date = july 12, 2022
+  const { MonthDayYear } = request.query; //* e.g. date = july 12, 2022
   const statementByDate = customer.statement.filter(
     (statement) =>
       statement.createdAt.substring(0, statement.createdAt.lastIndexOf(",")) ===
@@ -95,7 +95,7 @@ app.get("/statement/date", verifyIfAccountExists, (request, response) => {
 //*Post - New Deposit 
 app.post("/deposit", verifyIfAccountExists, (request, response) => {
   const { description, amount } = request.body;
-  const { customer } = request; //customer from  request
+  const { customer } = request; //*customer from  request
   const statementOperation = {
     description,
     amount,
@@ -127,7 +127,7 @@ app.post('/withdraw', verifyIfAccountExists, (request, response) =>{
   return response.sendStatus(StatusCodes.StatusCodes.OK);
 })
 
-//* Get - The balance from the account
+//* Get - The balance from the  account
 app.get("/balance", verifyIfAccountExists, (request, response) => {
   const {customer} = request; 
   const balance = GetBalance(customer.statement) 
@@ -137,18 +137,18 @@ app.get("/balance", verifyIfAccountExists, (request, response) => {
 //* Put - Change Customer Information
 app.put("/account", verifyIfAccountExists, (request, response) => {
   const {name} = request.body;
-  const { customer } = request; //customer from request
+  const { customer } = request; //*customer from request
   customer.name = name; 
   return response.status(StatusCodes.StatusCodes.OK).send();
 })
 
 //* Get Account information
 app.get("/account", verifyIfAccountExists, (request, response) => {
-  const { customer } = request; //customer from request
+  const { customer } = request; //*customer from request
   return response.json(customer);
 })
 app.delete("/account", verifyIfAccountExists, (request, response) => {
-  const { customer} = request; //customer from request
+  const { customer} = request; //*customer from request
   customers.splice(customer, 1)
   return response.status(StatusCodes.StatusCodes.OK).json(customers)
 })

@@ -62,16 +62,31 @@ $ npm run start
 
 ## 💡 endpoints
 
-- GET /account 
+- POST /account 
 ```json
 {
-"customerID": 12345, 
+"sin": 1-123-456-7890, 
 "name":"your name",
 }
 ```
+-----
 - POST /deposit
+
+Header sin: 1-123-456-7890
+```json
+{
+	"description":"Account Transfer In",
+	"amount":4800.00
+}
+```
+-----
 - GET /statement
+
+Header sin: 1-123-456-7890
+
+-----
 - GET /statement/date
+
 - POST /withdraw
 - GET /balance
 - PUT /account

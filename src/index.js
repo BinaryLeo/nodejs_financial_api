@@ -24,10 +24,10 @@ const options = {
   hour: "numeric",
 };
 
-//*Middleware - Verify Account by CPF 
+//*Middleware - Verify Account by ID 
 function verifyIfAccountExists(request, response, next) {
-  const { cpf } = request.headers; // get cpf from headers
-  const customer = customers.find((currentCustomer) => currentCustomer.cpf === cpf);
+  const { customerID } = request.headers; // get customerID from headers
+  const customer = customers.find((currentCustomer) => currentCustomer.customerID === customerID);
   if (!customer) {
     return response
       .status(StatusCodes.StatusCodes.NOT_FOUND)
@@ -50,11 +50,11 @@ function GetBalance(statement){
 
 //*Post - Create a new customer Account
 app.post("/account", (request, response) => {
-  const { cpf, name } = request.body; // get the cpf and name from the request
+  const { customerID, name } = request.body; // get the customerID and name from the request
   const customerAlredyExists = customers.some(
     (
       customer // exist/not exist
-    ) => customer.cpf === cpf
+    ) => customer.customerID === customerID
   );
   if (customerAlredyExists) {
     response.status(StatusCodes.StatusCodes.NOT_FOUND).json({
@@ -62,7 +62,7 @@ app.post("/account", (request, response) => {
     });
   }
   customers.push({
-    cpf,
+    customerID,
     name,
     id: uuidv4(),
     statement: [],
@@ -127,7 +127,7 @@ app.post('/withdraw', verifyIfAccountExists, (request, response) =>{
   return response.sendStatus(StatusCodes.StatusCodes.OK);
 })
 
-//* Get - The balance from the  account
+//* Get - The balance from the account
 app.get("/balance", verifyIfAccountExists, (request, response) => {
   const {customer} = request; 
   const balance = GetBalance(customer.statement) 

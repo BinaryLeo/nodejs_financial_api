@@ -147,4 +147,9 @@ app.get("/account", verifyIfAccountExists, (request, response) => {
   const { customer } = request; //customer from request
   return response.json(customer);
 })
+app.delete("/account", verifyIfAccountExists, (request, response) => {
+  const { customer} = request; //customer from request
+  customers.splice(customer, 1)
+  return response.status(StatusCodes.StatusCodes.OK).json(customers)
+})
 app.listen(3333);

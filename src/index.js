@@ -27,7 +27,7 @@ const options = {
 //*Middleware - Verify Account by CPF 
 function verifyIfAccountExists(request, response, next) {
   const { cpf } = request.headers; // get cpf from headers
-  const customer = customers.find((customer) => customer.cpf === cpf);
+  const customer = customers.find((currentCustomer) => currentCustomer.cpf === cpf);
   if (!customer) {
     return response
       .status(StatusCodes.StatusCodes.NOT_FOUND)
@@ -82,14 +82,14 @@ app.get("/statement", verifyIfAccountExists, (request, response) => {
 //*Get - Statement by Date
 app.get("/statement/date", verifyIfAccountExists, (request, response) => {
   const { customer } = request; 
-  const { date } = request.query; // e.g. date = july 12, 2022
-  const statement = customer.statement.filter(
+  const { MonthDayYear } = request.query; // e.g. date = july 12, 2022
+  const statementByDate = customer.statement.filter(
     (statement) =>
       statement.createdAt.substring(0, statement.createdAt.lastIndexOf(",")) ===
-      date.toString()
+      MonthDayYear.toString()
   );
 
-  return response.json(statement);
+  return response.json(statementByDate);
 });
 
 //*Post - New Deposit 

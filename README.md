@@ -63,6 +63,9 @@ $ npm run dev
 ## 💡 endpoints
 
 - POST /account  </br>
+![create](https://user-images.githubusercontent.com/72607039/179602602-e092ee6e-dd3c-408e-80bb-0910e218731b.JPG)
+
+
 ```json
 {
 "sin": 1-123-456-7890, 
@@ -71,6 +74,7 @@ $ npm run dev
 ```
 -----
 - POST /deposit </br>
+![deposit](https://user-images.githubusercontent.com/72607039/179602679-107e6209-1640-4d45-8b60-f3234024bc6f.JPG)</br>
 Header sin: 1-123-456-7890
 ```json
 {
@@ -80,14 +84,17 @@ Header sin: 1-123-456-7890
 ```
 -----
 - GET /statement </br>
+![statement](https://user-images.githubusercontent.com/72607039/179602824-209dbd72-da57-426c-bbeb-809dc76802b9.JPG)</br>
 Header sin: 1-123-456-7890
 -----
 - GET /statement/date </br>
+![bydate](https://user-images.githubusercontent.com/72607039/179602872-71c865f1-ff94-40a5-bcdf-c1236b99ad6e.gif)</br>
 Header sin: 1-123-456-7890 </br>
 Query  MonthDayYear: July 15, 2022 e.g
 
 -----
 - POST /withdraw </br>
+![withdraw](https://user-images.githubusercontent.com/72607039/179602923-5b611b17-04a9-4f3c-b6c1-e4318d3cf4ff.JPG)</br>
 Header sin: 1-123-456-7890
 ```json
 {
@@ -96,9 +103,11 @@ Header sin: 1-123-456-7890
 ```
 -----
 - GET /balance</br>
+![balance](https://user-images.githubusercontent.com/72607039/179602948-48041616-3d1a-4854-88a2-3868bc5de5d9.JPG)</br>
 Header sin: 1-123-456-7890
 -----
 - PUT /account</br>
+![putdata](https://user-images.githubusercontent.com/72607039/179602964-28511584-d4d5-462a-b22c-00b716cdda2a.JPG)</br>
 Header sin: 1-123-456-7890
 ```json
 {
@@ -108,6 +117,7 @@ Header sin: 1-123-456-7890
 -----
 
 - DELETE /account</br>
+![delete](https://user-images.githubusercontent.com/72607039/179603016-16214939-85d0-410e-b1ce-9b309d03613b.JPG)</br>
 Header sin: 1-123-456-7890
 -----
 ## 📄 License
